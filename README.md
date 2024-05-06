@@ -8,3 +8,7 @@
 1. Acrescente o pacote `PostgreSQL Client`
 1. E siga as instruções para a finalização do processo e do **rebuild**
 
+## Configuração do CloudBeaver
+[1] https://github.com/dbeaver/cloudbeaver/wiki/Run-Docker-Container
+
+[2] https://github.com/dbeaver/cloudbeaver/wiki/CloudBeaver-Community-deployment-from-docker-image
