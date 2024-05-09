@@ -15,7 +15,9 @@
 		5432
 	],
 	"features": {
-		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {}
+		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	}
 
 	// Use 'postCreateCommand' to run commands after the container is created.
