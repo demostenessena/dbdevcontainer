@@ -22,7 +22,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"mtxr.sqltools"
+				"mtxr.sqltools",
+				"cmoog.sqlnotebook"
 			]
 		}
 	}
