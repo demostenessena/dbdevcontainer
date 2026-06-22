@@ -52,7 +52,6 @@ DROP TABLE dbex.cidades;
 ## Criando a tabela `localizacoes`
 */
 
-
 CREATE TABLE IF NOT EXISTS dbex.localizacoes (
 	id int GENERATED ALWAYS AS IDENTITY,
 	id_cidade int NOT NULL, 
@@ -60,8 +59,17 @@ CREATE TABLE IF NOT EXISTS dbex.localizacoes (
 	longitude float NOT NULL,
 	CONSTRAINT localizacoes_pk PRIMARY KEY (id),
 	CONSTRAINT localizacoes_cidades_fk FOREIGN KEY (id_cidade)
-				REFERENCES dbex.cidades(id)
+				REFERENCES dbex.cidades(id),
+	CONSTRAINT localizacoes_un UNIQUE(id_cidade)
 );
+
+drop table dbex.localizacoes;
+
+/*markdown
+## Adicionando uma constraint na tabela `localizacoes`
+*/
+
+ALTER TABLE dbex.localizacoes ADD CONSTRAINT localizacoes_un2 UNIQUE(latitude, longitude);
 
 
 /*markdown
@@ -87,13 +95,10 @@ CREATE TABLE IF NOT EXISTS dbex.tempos (
 ## Criando a tabela `centrais`
 */
 
-
 CREATE TABLE IF NOT EXISTS dbex.centrais (
-    codigo int NOT NULL,
+    codigo char(5) NOT NULL,
     CONSTRAINT centrais_pk PRIMARY KEY(codigo)
 );
-
-
 
 /*markdown
 ## Criando a tabela `centrais_tempos`
