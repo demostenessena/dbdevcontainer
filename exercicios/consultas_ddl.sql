@@ -11,7 +11,7 @@ CREATE TABLE Pessoa (
 CREATE TABLE Paciente (
     cpf_pessoa CHAR(11) PRIMARY KEY,
     senha VARCHAR(20) NOT NULL,
-    plano_saude BOOLEAN NOT NULL DEFAULT 0,
+    plano_saude BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_paciente_pessoa FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf) ON DELETE CASCADE
 );
 
