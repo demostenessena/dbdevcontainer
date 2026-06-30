@@ -34,6 +34,8 @@ INSERT INTO dbex.localizacoes (latitude, longitude, id_cidade) VALUES
 (-19.9167, -43.9345, 9),
 (-18.9140, -48.2740, 10);
 
+ALTER TABLE dbex.centrais ALTER COLUMN codigo TYPE char(5);
+
 
 INSERT INTO dbex.centrais (codigo) VALUES
 ('C0001'),
@@ -48,7 +50,7 @@ INSERT INTO dbex.centrais (codigo) VALUES
 ('B2003');
 
 
-INSERT INTO dbex.tempos (tempo_min, tempo_max, precip_pluviom, dh_coleta, id_cidade) VALUES
+INSERT INTO dbex.tempos (temp_min, temp_max, precip_pluviom, data_coleta, id_cidade) VALUES
 (20, 28, 5.2, '2025-01-10 08:00', 1),
 (19, 30, NULL, '2025-01-10 09:00', 2),
 (21, 27, 0.0, '2025-01-10 10:00', 3),
@@ -60,8 +62,16 @@ INSERT INTO dbex.tempos (tempo_min, tempo_max, precip_pluviom, dh_coleta, id_cid
 (23, 31, 2.4, '2025-01-12 10:00', 9),
 (24, 32, NULL, '2025-01-13 08:00', 10);
 
+CREATE TABLE IF NOT EXISTS dbex.centrais_tempos (
+    id_tempo int NOT NULL,
+    codigo_central char(5) NOT NULL, 
+    CONSTRAINT centrais_tempos_pk PRIMARY KEY (id_tempo, codigo_central),
+    CONSTRAINT ct_tempos_fk FOREIGN KEY(id_tempo) REFERENCES dbex.tempos (id),
+    CONSTRAINT ct_centrais_fk FOREIGN KEY(codigo_central) REFERENCES dbex.centrais (codigo)
+);
 
-INSERT INTO dbex.temposcentrais (id_tempo, codigo_central) VALUES
+
+INSERT INTO dbex.centrais_tempos (id_tempo, codigo_central) VALUES
 (1, 'C0001'),
 (1, 'C0002'),
 (2, 'C0001'),
