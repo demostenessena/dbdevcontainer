@@ -29,8 +29,8 @@ Visualizando a data da coleta, as temperaturas e as precipitações pluviométri
 select data_coleta, temp_min, temp_max, precip_pluviom 
     from dbex.tempos;
 
-
 /*markdown
+
 ## Utilizando apelido (_alias_) para as colunas e para as tabelas
 */
 
@@ -44,8 +44,8 @@ select t.data_coleta as "data da coleta",
         t.precip_pluviom as "precipitação"
     from dbex.tempos t;
 
-
 /*markdown
+
 ## Paginação dos dados
 */
 
@@ -59,7 +59,6 @@ select data_coleta as "data da coleta",
         precip_pluviom as precipitação
     from dbex.tempos offset 8 limit 4;
 
-
 /*markdown
 ## Aplicando operações e funções nas colunas do resultado do comando `SELECT`
 */
@@ -72,8 +71,8 @@ Listar as diferentes temperaturas máximas identificadas em todos os registros
 select distinct temp_min as "temperatura mínima" 
 from dbex.tempos;
 
-
 /*markdown
+
 Listar a data da coleta e a variação da temperatura de todos os registros
 */
 
@@ -103,8 +102,8 @@ select  data_coleta as "data da coleta",
    from dbex.tempos
    where extract(day from data_coleta) <> 11 and precip_pluviom > 2.0;
 
-
 /*markdown
+
 Listar a data da coleta e a variação da temperatura dos registros com a precipitação entre 1.0 e 3.0 (inclusivamente).
 */
 
@@ -112,8 +111,8 @@ select precip_pluviom, data_coleta
     from dbex.tempos
     where precip_pluviom between 1.0 and 3.0;
 
-
 /*markdown
+
 *Importante!* A cláusula `limit` não limita a quantidade de registros avaliados. O comando abaixo ilustra uma possibilidade de comando para limitar a quantidade de registro processados.
 */
 
@@ -122,8 +121,8 @@ select precip_pluviom, data_coleta
             from dbex.tempos offset 0 limit 4) 
     where precip_pluviom >= 1 and precip_pluviom <= 3;
 
-
 /*markdown
+
 ## Ordenando os resultados de uma consulta
 */
 
