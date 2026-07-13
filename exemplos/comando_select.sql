@@ -135,3 +135,67 @@ select precip_pluviom, data_coleta
     from dbex.tempos
     where precip_pluviom between 1 and 3
     order by data_coleta asc, precip_pluviom desc;
+
+select count(*)
+	from dbex.tempos;
+
+select avg(temp_max)
+    from dbex.tempos 
+    where extract(month from data_coleta) = 01 and
+                         extract(year from data_coleta) = 2025;
+
+
+delete from dbex.tempos;
+
+select  data_coleta, count(*) as "quantidade", 
+		max(temp_max) as "máxima"
+    from dbex.tempos 
+	where temp_max > 24
+    group by data_coleta;
+
+select data_coleta as "data da coleta", count(*) as "quantidade"
+    from dbex.tempos
+    group by data_coleta 
+		having data_coleta != '2025-01-11 09:00';
+
+select  data_coleta as "data da coleta", 
+		precip_pluviom as "precipitação",
+		count(*) as "quantidade",
+		max(temp_max) as "máxima"
+    from dbex.tempos
+	where temp_max > 24
+    group by data_coleta, precip_pluviom 
+		having data_coleta != '2025-01-11 09:00' and 
+				precip_pluviom is not null;
+
+select id from dbex.cidades where nome = 'São Paulo';
+
+select temp_max, temp_min 
+	from dbex.tempos 
+	where id_cidade = 4;
+
+select temp_max, temp_min 
+	from dbex.tempos 
+	where id_cidade in 
+		(select id 
+			from dbex.cidades 
+			where nome = 'São Paulo')
+	;
+
+select temp_max, temp_min 
+	from dbex.tempos 
+	where id_cidade not in 
+		(select id 
+			from dbex.cidades 
+			where nome = 'São Paulo')
+	;
+
+select t.temp_max, t.temp_min 
+	from dbex.tempos t, dbex.cidades c
+	where t.id_cidade = c.id 
+		  and c.estado = 'SP';			
+
+select c.*, t.* 
+	from dbex.cidades c, dbex.tempos t
+	where   c.id = t.id_cidade and
+            c.estado = 'SP';
