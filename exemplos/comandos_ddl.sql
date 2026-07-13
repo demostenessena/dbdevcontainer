@@ -163,6 +163,10 @@ ALTER TABLE dbex.clientes ALTER COLUMN pw_cliente TYPE int;
 ## Restrições das _Foreign Keys_
 */
 
+/*markdown
+`ON DELETE NO ACTION`
+*/
+
 create table if not exists dbex.enderecos (
     id int generated always as identity,
     descricao text not null,
@@ -171,6 +175,10 @@ create table if not exists dbex.enderecos (
     constraint endereco_un unique (id_cliente),
     constraint endereco_cliente_fk foreign key(id_cliente) references dbex.clientes(id) on delete no action
 );
+
+/*markdown
+`ON DELETE RESTRICT`
+*/
 
 create table if not exists dbex.enderecos (
     id int generated always as identity,
@@ -181,6 +189,10 @@ create table if not exists dbex.enderecos (
     constraint endereco_cliente_fk foreign key(id_cliente) references dbex.clientes(id) on delete restrict
 );
 
+/*markdown
+`ON DELETE CASCADE`
+*/
+
 create table if not exists dbex.enderecos (
     id int generated always as identity,
     descricao text not null,
@@ -190,6 +202,10 @@ create table if not exists dbex.enderecos (
     constraint endereco_cliente_fk foreign key(id_cliente) references dbex.clientes(id) on delete cascade
 );
 
+/*markdown
+`ON DELETE SET NULL`
+*/
+
 create table if not exists dbex.enderecos (
     id int generated always as identity,
     descricao text not null,
@@ -198,6 +214,10 @@ create table if not exists dbex.enderecos (
     constraint endereco_un unique (id_cliente),
     constraint endereco_cliente_fk foreign key(id_cliente) references dbex.clientes(id) on delete set null
 );
+
+/*markdown
+`ON DELETE SET DEFAULT`
+*/
 
 create table if not exists dbex.enderecos (
     id int generated always as identity,

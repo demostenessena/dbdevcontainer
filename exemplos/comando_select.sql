@@ -30,7 +30,6 @@ select data_coleta, temp_min, temp_max, precip_pluviom
     from dbex.tempos;
 
 /*markdown
-
 ## Utilizando apelido (_alias_) para as colunas e para as tabelas
 */
 
@@ -45,7 +44,6 @@ select t.data_coleta as "data da coleta",
     from dbex.tempos t;
 
 /*markdown
-
 ## Paginação dos dados
 */
 
@@ -72,7 +70,6 @@ select distinct temp_min as "temperatura mínima"
 from dbex.tempos;
 
 /*markdown
-
 Listar a data da coleta e a variação da temperatura de todos os registros
 */
 
@@ -103,7 +100,6 @@ select  data_coleta as "data da coleta",
    where extract(day from data_coleta) <> 11 and precip_pluviom > 2.0;
 
 /*markdown
-
 Listar a data da coleta e a variação da temperatura dos registros com a precipitação entre 1.0 e 3.0 (inclusivamente).
 */
 
@@ -112,7 +108,6 @@ select precip_pluviom, data_coleta
     where precip_pluviom between 1.0 and 3.0;
 
 /*markdown
-
 *Importante!* A cláusula `limit` não limita a quantidade de registros avaliados. O comando abaixo ilustra uma possibilidade de comando para limitar a quantidade de registro processados.
 */
 
@@ -122,7 +117,6 @@ select precip_pluviom, data_coleta
     where precip_pluviom >= 1 and precip_pluviom <= 3;
 
 /*markdown
-
 ## Ordenando os resultados de uma consulta
 */
 
@@ -156,8 +150,9 @@ select avg(temp_max)
     where extract(month from data_coleta) = 01 and
                          extract(year from data_coleta) = 2025;
 
-
-delete from dbex.tempos;
+/*markdown
+Agrupar os registros pela data de coleta e retornar a quantidade de registros de cada agrupamento.
+*/
 
 select  data_coleta, count(*) as "quantidade", 
 		max(temp_max) as "máxima"
@@ -165,10 +160,18 @@ select  data_coleta, count(*) as "quantidade",
 	where temp_max > 24
     group by data_coleta;
 
+/*markdown
+Agrupar os registros pela data de coleta e retornar a quantidade de registros que não foram coleta em `11 de Janeiro de 2025`.
+*/
+
 select data_coleta as "data da coleta", count(*) as "quantidade"
     from dbex.tempos
     group by data_coleta 
 		having data_coleta != '2025-01-11 09:00';
+
+/*markdown
+Agrupar os registros pela data de coleta e a precipitação pluviométrica, em seguida, retornar a quantidade de registros e a maior temperatura máxima observada. Desconsidere os valores coletados em `11 de Janeiro de 2025`e sem valor de precipitação.
+*/
 
 select  data_coleta as "data da coleta", 
 		precip_pluviom as "precipitação",
@@ -180,11 +183,27 @@ select  data_coleta as "data da coleta",
 		having data_coleta != '2025-01-11 09:00' and 
 				precip_pluviom is not null;
 
+/*markdown
+## SELECT´s aninhados
+*/
+
+/*markdown
+Retorna o `id` da cidade de "São Paulo"
+*/
+
 select id from dbex.cidades where nome = 'São Paulo';
+
+/*markdown
+Retornar as temperaturas observadas na cidade de `id` igual à `4` ("São Paulo"?!)
+*/
 
 select temp_max, temp_min 
 	from dbex.tempos 
 	where id_cidade = 4;
+
+/*markdown
+Retornar as temperaturas observadas na cidade de "São Paulo".
+*/
 
 select temp_max, temp_min 
 	from dbex.tempos 
@@ -194,6 +213,10 @@ select temp_max, temp_min
 			where nome = 'São Paulo')
 	;
 
+/*markdown
+Retornar as temperaturas observadas em todas as cidades, exceto na cidade de "São Paulo".
+*/
+
 select temp_max, temp_min 
 	from dbex.tempos 
 	where id_cidade not in 
@@ -202,12 +225,11 @@ select temp_max, temp_min
 			where nome = 'São Paulo')
 	;
 
+/*markdown
+Retorna as temperaturas observadas nas cidades do estado de "SP". (Usando o operador de junção cruzada "`,`")
+*/
+
 select t.temp_max, t.temp_min 
 	from dbex.tempos t, dbex.cidades c
 	where t.id_cidade = c.id 
 		  and c.estado = 'SP';			
-
-select c.*, t.* 
-	from dbex.cidades c, dbex.tempos t
-	where   c.id = t.id_cidade and
-            c.estado = 'SP';

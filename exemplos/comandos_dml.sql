@@ -15,6 +15,8 @@ Reiniciando os valores das sequências
 */
 
 ALTER SEQUENCE dbex.cidades_id_seq RESTART WITH 1;
+ALTER SEQUENCE dbex.localizacoes_id_seq RESTART WITH 1;
+ALTER SEQUENCE dbex.tempos_id_seq RESTART WITH 1;
 
 /*markdown
 ## Inserindo os dados (Comando `INSERT INTO`)
