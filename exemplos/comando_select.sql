@@ -136,8 +136,20 @@ select precip_pluviom, data_coleta
     where precip_pluviom between 1 and 3
     order by data_coleta asc, precip_pluviom desc;
 
+/*markdown
+## Funções de Agrupamento
+*/
+
+/*markdown
+Listar a quantidade de registros cadastrados na tabela `tempos`.
+*/
+
 select count(*)
 	from dbex.tempos;
+
+/*markdown
+Obter a média aritmética das temperaturas máximas coletas em Janeiro de 2025.
+*/
 
 select avg(temp_max)
     from dbex.tempos 

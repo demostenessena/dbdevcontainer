@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS dbex.localizacoes (
 	longitude float NOT NULL,
 	CONSTRAINT localizacoes_pk PRIMARY KEY (id),
 	CONSTRAINT localizacoes_cidades_fk FOREIGN KEY (id_cidade)
-				REFERENCES dbex.cidades(id),
+				REFERENCES dbex.cidades(id) ON DELETE CASCADE,
 	CONSTRAINT localizacoes_un UNIQUE(id_cidade)
 );
 
@@ -77,13 +77,13 @@ CREATE TABLE IF NOT EXISTS dbex.tempos (
 	data_coleta TIMESTAMP NOT NULL,
 	CONSTRAINT tempos_pk PRIMARY KEY (id),
 	CONSTRAINT tempos_cidades_fk FOREIGN KEY (id_cidade)
-				REFERENCES dbex.cidades(id)
+				REFERENCES dbex.cidades(id) ON DELETE CASCADE
 );
 
 
 
 /*markdown
-## Criando a tabela `centrais`
+Criando a tabela `centrais`
 */
 
 CREATE TABLE IF NOT EXISTS dbex.centrais (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS dbex.centrais (
 );
 
 /*markdown
-## Criando a tabela `centrais_tempos`
+Criando a tabela `centrais_tempos`
 */
 
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS dbex.centrais_tempos (
     codigo_central char(5) NOT NULL, 
     CONSTRAINT centrais_tempos_pk PRIMARY KEY (id_tempo, codigo_central),
     CONSTRAINT ct_tempos_fk FOREIGN KEY(id_tempo) REFERENCES dbex.tempos (id),
-    CONSTRAINT ct_centrais_fk FOREIGN KEY(codigo_central) REFERENCES dbex.centrais (codigo)
+    CONSTRAINT ct_centrais_fk FOREIGN KEY(codigo_central) REFERENCES dbex.centrais (codigo) ON DELETE CASCADE
 );
 
 /*markdown
@@ -219,3 +219,37 @@ select * from dbex.clientes;
 insert into dbex.enderecos (descricao, id_cliente) values ('Av. Sen. Salgado - 1000', 1);
 
 select * from dbex.enderecos;
+
+/*markdown
+## Comando `DROP TABLE`
+*/
+
+/*markdown
+Removendo a tabela `centrais_tempos`
+*/
+
+DROP TABLE dbex.centrais_tempos;
+
+/*markdown
+Removendo a tabela `centrais`
+*/
+
+DROP TABLE dbex.centrais;
+
+/*markdown
+Removendo a tabela `tempos`
+*/
+
+DROP TABLE dbex.tempos;
+
+/*markdown
+Removendo a tabela `localizacoes`
+*/
+
+DROP TABLE dbex.localizacoes;
+
+/*markdown
+Removendo a tabela `cidades`
+*/
+
+DROP TABLE dbex.cidades;
